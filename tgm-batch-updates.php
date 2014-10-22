@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class TGM_Batch_Updates {
 
-	/**
+    /**
      * Number of posts to check per batch.
      *
      * @since 1.0.0
@@ -54,20 +54,20 @@ class TGM_Batch_Updates {
      *
      * @since 1.0.0
      *
-     * @param int $ppp 	  The posts_per_page number to use in the query.
+     * @param int $ppp    The posts_per_page number to use in the query.
      * @param int $offset The offset to use for querying data.
-     * @return mixed 	  An array of data to be processed in bulk fashion.
+     * @return mixed      An array of data to be processed in bulk fashion.
      */
     public function get_query_data( $ppp, $offset ) {
 
-	    return get_posts(
+        return get_posts(
             array(
-				'post_type' 	 => 'post',
-				'post_status'    => 'any',
-				'orderby'		 => 'date',
-				'order'			 => 'ASC',
-				'cache_results'  => false,	 // Do not modify.
-				'posts_per_page' => $ppp,    // Do not modify.
+                'post_type'      => 'post',
+                'post_status'    => 'any',
+                'orderby'        => 'date',
+                'order'          => 'ASC',
+                'cache_results'  => false,   // Do not modify.
+                'posts_per_page' => $ppp,    // Do not modify.
                 'offset'         => $offset, // Do not modify.
             )
         );
@@ -83,13 +83,13 @@ class TGM_Batch_Updates {
      */
     public function process_query_data( $data ) {
 
-		// Loop through each post and add a custom field.
+        // Loop through each post and add a custom field.
         foreach ( (array) $data as $post ) {
-	        // Checks if the custom field exists. If not, add it with the title of the post.
-	        $field = get_post_meta( $post->ID, 'my_custom_field', true );
-	        if ( empty( $field ) ) {
-		        update_post_meta( $post->ID, 'my_custom_field', $post->post_title );
-	        }
+            // Checks if the custom field exists. If not, add it with the title of the post.
+            $field = get_post_meta( $post->ID, 'my_custom_field', true );
+            if ( empty( $field ) ) {
+                update_post_meta( $post->ID, 'my_custom_field', $post->post_title );
+            }
         }
 
     }
@@ -240,19 +240,19 @@ class TGM_Batch_Updates {
             <p><?php _e( 'The batch update routine has started. Please be patient as this may take several minutes to complete.', 'tgm-batch-updates' ); ?> <img class="tgm-batch-loading" src="<?php echo includes_url( 'images/spinner-2x.gif' ); ?>" alt="<?php esc_attr_e( 'Loading...', 'tgm-batch-updates' ); ?>" width="20px" height="20px" style="vertical-align:bottom" /></p>
             <p class="tgm-batch-step"><strong><?php printf( __( 'Currently on step %d of a possible %d (steps may be less if your limit exceeds available items).', 'optin-monster-ga' ), (int) $step, (int) $steps ); ?></strong></p>
             <script type="text/javascript">
-				jQuery(document).ready(function($){
-					// Trigger the bulk upgrades to continue to processing.
-					$.post( ajaxurl, { action: 'tgm_batch_updates', step: '<?php echo $step; ?>', steps: '<?php echo absint( $_GET['tgm-batch-limit'] ); ?>', nonce: '<?php echo $nonce; ?>' }, function(res){
-						if ( res && res.success || res && res.done ) {
-							$('.tgm-batch-step').after('<?php echo $this->get_success_message(); ?>');
-							$('.tgm-batch-loading').remove();
-							return;
-						} else {
-    						document.location.href = '<?php echo add_query_arg( array( 'page' => $this->plugin_slug, 'tgm-batch-updates' => 1, 'tgm-batch-step' => (int) $step + 1, 'tgm-batch-limit' => absint( $_GET['tgm-batch-limit'] ) ), admin_url( 'tools.php' ) ); ?>';
-						}
-					}, 'json');
-				});
-			</script>
+                jQuery(document).ready(function($){
+                    // Trigger the bulk upgrades to continue to processing.
+                    $.post( ajaxurl, { action: 'tgm_batch_updates', step: '<?php echo $step; ?>', steps: '<?php echo absint( $_GET['tgm-batch-limit'] ); ?>', nonce: '<?php echo $nonce; ?>' }, function(res){
+                        if ( res && res.success || res && res.done ) {
+                            $('.tgm-batch-step').after('<?php echo $this->get_success_message(); ?>');
+                            $('.tgm-batch-loading').remove();
+                            return;
+                        } else {
+                            document.location.href = '<?php echo add_query_arg( array( 'page' => $this->plugin_slug, 'tgm-batch-updates' => 1, 'tgm-batch-step' => (int) $step + 1, 'tgm-batch-limit' => absint( $_GET['tgm-batch-limit'] ) ), admin_url( 'tools.php' ) ); ?>';
+                        }
+                    }, 'json');
+                });
+            </script>
             <?php else : ?>
             <p><?php printf( __( 'Once submitted, the form below will start the batch update routine. It will upgrade items in groups of <strong>%d</strong> until the limit is hit. You can manually enter a limit below.', 'tgm-batch-updates' ), $this->num ); ?>
             <form id="tgm-batch-updates" method="get" action="<?php echo add_query_arg( 'page', $this->plugin_slug, admin_url( 'tools.php' ) ); ?>">
@@ -279,9 +279,9 @@ class TGM_Batch_Updates {
      */
     public function get_success_message() {
 
-	    $message  = '<div class="updated"><p>' . __( 'The batch update routine has been completed!', 'tgm-batch-updates' ) . '</p></div>';
-	    $message .= '<p><a class="button button-secondary" href="' . add_query_arg( array( 'page' => $this->plugin_slug ), admin_url( 'tools.php' ) ) . '" title="' . esc_attr__( 'Reset Batch Updates Page', 'tgm-batch-updates' ) . '">' . __( 'Reset Batch Updates Page', 'tgm-batch-updates' ) . '</a></p>';
-	    return $message;
+        $message  = '<div class="updated"><p>' . __( 'The batch update routine has been completed!', 'tgm-batch-updates' ) . '</p></div>';
+        $message .= '<p><a class="button button-secondary" href="' . add_query_arg( array( 'page' => $this->plugin_slug ), admin_url( 'tools.php' ) ) . '" title="' . esc_attr__( 'Reset Batch Updates Page', 'tgm-batch-updates' ) . '">' . __( 'Reset Batch Updates Page', 'tgm-batch-updates' ) . '</a></p>';
+        return $message;
 
     }
 
