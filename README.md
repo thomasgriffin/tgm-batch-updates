@@ -1,7 +1,7 @@
 TGM Batch Updates
 =================
 
-TGM Batch Updates is a batch updating utility plugin for WordPress.
+TGM Batch Updates is a batch updating utility plugin for WordPress. http://thomasgriffin.io/introducing-tgm-batch-updates-plugin-wordpress/
 
 _Have you ever had a large dataset that you needed to churn through and update?_ I experienced this issue the other week. I had to go through nearly 10,000 licenses to check for a specific type of key, and if that key existed, I needed to update the license data associated with it to match some internal updates that I had put in place. I was not about to attempt this manually, so I set about to create a batch updating utility to do this for me. **Viola - TGM Batch Updates for WordPress was born.**
 
