@@ -181,8 +181,8 @@ class TGM_Batch_Updates {
         // Grab all of our data.
         $data = $this->get_query_data( $ppp, $offset );
 
-        // If we have no data, we are done!
-        if ( empty( $data ) ) {
+        // If we have no data or it returns false, we are done!
+        if ( empty( $data ) || ! $data ) {
             die( json_encode( array( 'done' => true ) ) );
         }
 
