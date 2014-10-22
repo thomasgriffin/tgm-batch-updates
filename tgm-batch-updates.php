@@ -1,13 +1,15 @@
 <?php
 /**
- * Plugin Name: TGM Batch Updates
- * Plugin URI:  https://github.com/thomasgriffin/tgm-batch-updates
- * Description: A batch updating utility for handling large amounts of data in WordPress.
- * Author:      Thomas Griffin
- * Author URI:  http://thomasgriffin.io
- * Version:     1.0.0
- * Text Domain: tgm-batch-updates
- * Domain Path: languages
+ * Plugin Name:       TGM Batch Updates
+ * Plugin URI:        https://github.com/thomasgriffin/tgm-batch-updates
+ * Description:       A batch updating utility for handling large amounts of data in WordPress.
+ * Author:            Thomas Griffin
+ * Author URI:        http://thomasgriffin.io
+ * Version:           1.0.0
+ * Text Domain:       tgm-batch-updates
+ * Domain Path:       languages
+ * GitHub Plugin URI: https://github.com/thomasgriffin/tgm-batch-updates
+ * GitHub Branch:     master
  *
  * TGM Batch Updates is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
