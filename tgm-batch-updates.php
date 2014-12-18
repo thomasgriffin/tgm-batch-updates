@@ -159,7 +159,7 @@ class TGM_Batch_Updates {
         $step   = absint( $_POST['step'] );
         $steps  = absint( $_POST['steps'] );
         $ppp    = $this->num;
-        $offset = 1 == $step ? 0 : $ppp * ($step - 1);
+        $offset = 1 == $step ? 0 : $ppp * ($step - 1) - 1;
         $done   = false;
 
         // Possibly return early if the offset exceeds the total steps and the $ppp is equal to the difference.
@@ -170,14 +170,12 @@ class TGM_Batch_Updates {
         // If our offset is greater than our steps but $ppp is different, set $ppp to the difference.
         if ( $offset > ($steps - ($this->num * 2)) ) {
             $ppp    = $offset - $steps;
-            $offset = $offset + 1;
             $done   = true;
         }
-
-        // Ignore the user aborting and set the time limit to maximum (if allowed) for processing.
-        @ignore_user_abort( true );
-        if ( ! ini_get( 'safe_mode' ) ) {
-            @set_time_limit( 0 );
+        
+        // If we have matched our limit, set done to true.
+        if ( ($step * $ppp) >= $steps ) {
+	        $done = true;
         }
 
         // Grab all of our data.
@@ -185,11 +183,15 @@ class TGM_Batch_Updates {
 
         // If we have no data or it returns false, we are done!
         if ( empty( $data ) || ! $data ) {
+	        wp_cache_flush();
             die( json_encode( array( 'done' => true ) ) );
         }
 
         // Process our query data.
         $this->process_query_data( $data );
+        
+        // Flush the internal cache after every successful step.
+        wp_cache_flush();
 
         // Send back our response to say we need to process more items.
         die( json_encode( array( 'done' => $done ) ) );
